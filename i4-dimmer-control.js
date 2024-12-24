@@ -176,9 +176,8 @@ Shelly.addEventHandler(
                 // On single push, toggle the light on or off
                 case 'single_push':
                     log('toggling light ' + channelNumber)
+                    clearTimers()
                     toggle();
-                    Timer.clear(swapTimer);
-                    Timer.clear(sweepTimer);
                     break;
 
                 // On double push, set the light to 100% brightness
@@ -190,6 +189,7 @@ Shelly.addEventHandler(
                 // When the button is held down, sweep the brightness of the light up and down
                 case 'long_push':
                     blockDimming = false;
+                    clearTimers();
                     turnOn();
                     log('starting dimmer sweep for light ' + channelNumber);
                     getStatus(function (currentBrightness) {
@@ -209,8 +209,7 @@ Shelly.addEventHandler(
                     if (lastAction !== 'long_push') break;
                     log('long press ended - stopping dimming and cancelling timers')
                     stopDimming();
-                    Timer.clear(swapTimer);
-                    Timer.clear(sweepTimer);
+                    clearTimers();
                     break;
 
             }
@@ -225,6 +224,11 @@ Shelly.addEventHandler(
     }
 
 );
+
+const clearTimers = function () {
+    Timer.clear(swapTimer);
+    Timer.clear(sweepTimer);
+}
 
 const log = function(message) {
     if (!DEBUG) return;
