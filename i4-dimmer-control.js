@@ -8,7 +8,7 @@
  */
 
 // IP Address of the dimmer to be controlled.
-let i4DimmerControl = '192.168.x.x'
+let dimmer = '192.168.x.x'
 
 // Channel number of the light to control (0 or 1).
 let channelNumber = 1;
@@ -49,7 +49,7 @@ let blockDimming = false;
 let toggle = function () {
     Shelly.call(
         "http.get", {
-            url: 'http://' + i4DimmerControl + '/rpc/Light.Toggle?id=' + channelNumber
+            url: 'http://' + dimmer + '/rpc/Light.Toggle?id=' + channelNumber
         }
     );
 }
@@ -60,7 +60,7 @@ let toggle = function () {
 let maxBrightness = function () {
     Shelly.call(
         "http.get", {
-            url: 'http://' + i4DimmerControl + '/rpc/Light.Set?id=' + channelNumber + '&on=true&brightness=100'
+            url: 'http://' + dimmer + '/rpc/Light.Set?id=' + channelNumber + '&on=true&brightness=100'
         }
     );
 }
@@ -71,7 +71,7 @@ let maxBrightness = function () {
 let turnOn = function () {
     Shelly.call(
         "http.get", {
-            url: 'http://' + i4DimmerControl + '/rpc/Light.Set?id=' + channelNumber + '&on=true'
+            url: 'http://' + dimmer + '/rpc/Light.Set?id=' + channelNumber + '&on=true'
         }
     );
 }
@@ -83,7 +83,7 @@ let dimLight = function (method) {
     swapTriggered = false; // reset the swap flag for the sweep timer.
     Shelly.call(
         "http.get", {
-            url: 'http://' + i4DimmerControl + '/rpc/Light.' + method + '?id=' + channelNumber + '&fade_rate=' + fadeRate
+            url: 'http://' + dimmer + '/rpc/Light.' + method + '?id=' + channelNumber + '&fade_rate=' + fadeRate
         }
     );
 }
@@ -94,7 +94,7 @@ let dimLight = function (method) {
 let stopDimming = function () {
     Shelly.call(
         "http.get", {
-            url: 'http://' + i4DimmerControl + '/rpc/Light.DimStop?id=' + channelNumber
+            url: 'http://' + dimmer + '/rpc/Light.DimStop?id=' + channelNumber
         }
     );
 }
@@ -106,7 +106,7 @@ let stopDimming = function () {
 let getStatus = function (callback) {
     Shelly.call(
         "http.get", {
-            url: 'http://' + i4DimmerControl + '/rpc/Light.GetStatus?id=' + channelNumber
+            url: 'http://' + dimmer + '/rpc/Light.GetStatus?id=' + channelNumber
         },
         function (response, errorCode, errorMessage) {
             // Don't proceed if we have an error code
